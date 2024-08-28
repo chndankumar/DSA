@@ -14,22 +14,43 @@ public class preAndPostOrderIterative {
         }
     }
 
+    public static class Pair {
+        Node node;
+        int state;
+
+        public Pair(Node node, int state) {
+            this.node = node;
+            this.state = state;
+        }
+    }
+
+    // not completed
     public static void main(String[] args) {
         Node root = new Node(0, null);
-        Stack<Node> curr = new Stack<>();
-        Stack<Node> child = new Stack<>();
-        curr.push(root);
-        while (curr.size() != 0) {
-            Node temp = curr.pop();
-            System.out.println(temp.data);
-            int n = temp.children.size() - 1;
-            for (int i = n; i >= 0; i--) {
-                child.push(temp.children.get(i));
-            }
-            if (child.size() > 0) {
-                curr.push(child.pop());
+
+        Stack<Pair> st = new Stack<>();
+        Pair pair = new Pair(root, -1);
+        st.push(pair);
+
+        while (st.size() != 0) {
+            if (st.peek().state == -1) {
+                System.out.println(st.peek().node.data);
+                Pair pc = new Pair(st.peek().children., -1)
+                st.peek().state++;
+
             }
         }
+
+        // Stack<Node> curr = new Stack<>();
+        // curr.push(root);
+        // while (curr.size() != 0) {
+        // Node temp = curr.pop();
+        // System.out.println(temp.data);
+        // int n = temp.children.size() - 1;
+        // for (int i = n; i >= 0; i--) {
+        // curr.push(temp.children.get(i));
+        // }
+        // }
     }
 
 }
