@@ -34,7 +34,7 @@ public class LargestBSTsubTree {
         if (res.isBTS == true) {
             res.size = pl.size + pr.size + 1;
             res.max = pr.max;
-            res.min = pr.min;
+            res.min = pl.min;
             res.node = root;
             return res;
         } else {
