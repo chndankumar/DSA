@@ -3,7 +3,7 @@ package Graph;
 import java.io.*;
 import java.util.*;
 
-public class hasPath {
+public class IsGraphConnected {
     public static class Edge {
         int v1;
         int v2;
@@ -38,25 +38,32 @@ public class hasPath {
         // tell me source and destinetion
         int src = Integer.parseInt(br.readLine());
         int des = Integer.parseInt(br.readLine());
-        boolean[] flag = new boolean[graph.length];
-        findPath(graph, src, des, flag);
-    }
-
-    private static boolean findPath(ArrayList<Edge>[] graph, int src, int des, boolean[] flag) {
-        if (src == des) {
-            return true;
-        }
-        boolean res = false;
-        ArrayList<Edge> ListofEdge = graph[src];
-        flag[src] = true;
-        for (Edge edge : ListofEdge) {
-            if (flag[edge.v2] == false) {
-                res = findPath(graph, edge.v2, des, flag);
-                if (res) {
-                    return true;
+        boolean[] visited = new boolean[graph.length];
+        ArrayList<String> res = new ArrayList<>();
+        for (int i = 0; i < graph.length; i++) {
+            if (visited[i] == false) {
+                String resStr = isConnected(graph, src, visited, "");
+                if (resStr.length() != 0) {
+                    res.add(resStr);
+                }
+                if (res.size() > 1) {
+                    System.out.println("graph is not connect to all vertex");
+                    break;
                 }
             }
         }
-        return res;
+    }
+
+    private static String isConnected(ArrayList<Edge>[] graph, int src, boolean[] visited, String path) {
+        String res = "";
+        ArrayList<Edge> li = graph[src];
+        visited[src] = true;
+        for (Edge edge : li) {
+            if (visited[edge.v2] == false) {
+                String temp = isConnected(graph, src, visited, path);
+                res = res + temp;
+            }
+        }
+        return src + res;
     }
 }

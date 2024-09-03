@@ -1,4 +1,4 @@
-package Level_One_DSA.Graph;
+package Graph;
 
 import java.util.*;;
 

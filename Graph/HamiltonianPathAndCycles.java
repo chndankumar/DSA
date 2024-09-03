@@ -3,7 +3,8 @@ package Graph;
 import java.io.*;
 import java.util.*;
 
-public class hasPath {
+// not completed 
+public class HamiltonianPathAndCycles {
     public static class Edge {
         int v1;
         int v2;
@@ -39,24 +40,30 @@ public class hasPath {
         int src = Integer.parseInt(br.readLine());
         int des = Integer.parseInt(br.readLine());
         boolean[] flag = new boolean[graph.length];
-        findPath(graph, src, des, flag);
+        ArrayList<String> li = new ArrayList<>();
+
+        findPath(graph, src, flag, "", li);
+
     }
 
-    private static boolean findPath(ArrayList<Edge>[] graph, int src, int des, boolean[] flag) {
+    private static void findPath(ArrayList<Edge>[] graph, int src, boolean[] flag, int c, String path,
+            ArrayList<String> li) {
+
         if (src == des) {
-            return true;
+            if (c == graph.length) {
+                li.add(path);
+            }
+            return;
         }
-        boolean res = false;
+        String res = "";
         ArrayList<Edge> ListofEdge = graph[src];
         flag[src] = true;
         for (Edge edge : ListofEdge) {
             if (flag[edge.v2] == false) {
-                res = findPath(graph, edge.v2, des, flag);
-                if (res) {
-                    return true;
-                }
+                findPath(graph, edge.v2, des, flag, c++, path + edge.v1, li);
             }
-        }
-        return res;
+        
+        flag[src] = false;
+
     }
 }
