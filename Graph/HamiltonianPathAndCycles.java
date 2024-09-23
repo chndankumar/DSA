@@ -38,32 +38,31 @@ public class HamiltonianPathAndCycles {
         }
         // tell me source and destinetion
         int src = Integer.parseInt(br.readLine());
-        int des = Integer.parseInt(br.readLine());
-        boolean[] flag = new boolean[graph.length];
-        ArrayList<String> li = new ArrayList<>();
-
-        findPath(graph, src, flag, "", li);
-
+        boolean[] visited = new boolean[graph.length];
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+        ArrayList<Integer> li = new ArrayList<>();
+        findPath(graph, src, visited, li, res);
     }
 
-    private static void findPath(ArrayList<Edge>[] graph, int src, boolean[] flag, int c, String path,
-            ArrayList<String> li) {
-
-        if (src == des) {
-            if (c == graph.length) {
-                li.add(path);
+    private static void findPath(ArrayList<Edge>[] graph, int src, boolean[] visited, ArrayList<Integer> li,
+            ArrayList<ArrayList<Integer>> res) {
+        li.add(src);
+        if (li.size() == graph.length) {
+            res.add(li);
+            for (Edge edge : graph[src]) {
+                if (edge.v2 == li.get(0)) {
+                    System.out.println("it hamiltonian Cycle");
+                }
             }
             return;
         }
-        String res = "";
-        ArrayList<Edge> ListofEdge = graph[src];
-        flag[src] = true;
-        for (Edge edge : ListofEdge) {
-            if (flag[edge.v2] == false) {
-                findPath(graph, edge.v2, des, flag, c++, path + edge.v1, li);
+        visited[src] = true;
+        for (Edge edge : graph[src]) {
+            if (visited[edge.v2] == false) {
+                findPath(graph, edge.v2, visited, li, res);
             }
-        
-        flag[src] = false;
-
+        }
+        li.remove(li.size());
+        visited[src] = false;
     }
 }

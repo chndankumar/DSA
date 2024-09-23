@@ -44,21 +44,28 @@ public class IsAGraphCyclicByDFS {
         }
         int src = Integer.parseInt(br.readLine());
         boolean[] visited = new boolean[graph.length];
-        boolean res = isCyclic(graph, src, -1, visited);
+        for (int i = 0; i < graph.length; i++) {
+            if (visited[i] == false) {
+                if (isCyclic(graph, src, -1, visited)) {
+                    System.out.println("it is cyclic");
+                    break;
+                }
+            }
+        }
+        System.out.println("it is not cyclic");
     }
 
     private static boolean isCyclic(ArrayList<Edge>[] graph, int src, int parent, boolean[] visited) {
-        ArrayList<Edge> li = graph[src];
+
         visited[src] = true;
-        for (Edge edge : li) {
-            if (edge.v2 != parent) {
-                if (visited[edge.v2] == true) {
+        for (Edge edge : graph[src]) {
+            if (visited[edge.v2] == false) {
+                if (isCyclic(graph, edge.v2, src, visited)) {
                     return true;
-                } else {
-                    if (isCyclic(graph, edge.v2, src, visited)) {
-                        return true;
-                    }
                 }
+            } else {
+                if (edge.v2 != parent)
+                    return true;
             }
         }
         return false;

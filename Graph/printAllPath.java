@@ -39,7 +39,7 @@ public class printAllPath {
         int src = Integer.parseInt(br.readLine());
         int des = Integer.parseInt(br.readLine());
         boolean[] visited = new boolean[graph.length];
-        findAllPath(graph, src, des, flag, "");
+        findAllPath(graph, src, des, visited, "");
     }
 
     private static void findAllPath(ArrayList<Edge>[] graph, int src, int des, boolean[] visited, String path) {

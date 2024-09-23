@@ -46,36 +46,46 @@ public class IsAGraphCyclicByBFS {
         }
         int src = Integer.parseInt(br.readLine());
         boolean[] visited = new boolean[graph.length];
-        Queue<Vertx> qu = new ArrayDeque<>();
-        qu.add(new Vertx(src, src + ""));
-
-        while (qu.size() != 0) {
-            // remove
-            Vertx vx = qu.remove();
-            // mark that it's visited if visisted continue do not do any work
-            if (visited[vx.idx] = true) {
-                System.out.println()
-                break;
-            }
-            visited[vx.idx] = true;
-            // print path or do the work with vertex
-            System.out.println(vx.path);
-            // add child
-            for (Edge edge : graph[vx.idx]) {
-                if (visited[edge.v2] == false) {
-                    qu.add(new Vertx(edge.v2, vx.path + edge.v2));
+        for (int i = 0; i < graph.length; i++) {
+            if (visited[i] == false) {
+                if (isCyclic(graph, visited, i)) {
+                    System.out.println("its cyclic");
+                    break;
                 }
             }
         }
+        System.out.println("its not cyclic");
     }
 
-    public static class Vertx {
-        int idx;
-        String path;
+    private static boolean isCyclic(ArrayList<Edge>[] graph, boolean[] visited, int i) {
+        Queue<Pair> qu = new ArrayDeque<>();
+        visited[i] = true;
+        qu.add(new Pair(i, 1));
+        while (qu.size() != 0) {
+            Pair p = qu.remove();
+            int idx = p.idx;
+            int par = p.par;
 
-        public Vertx(int idx, String path) {
+            for (Edge edge : graph[idx]) {
+                if (visited[edge.v2] == false) {
+                    visited[idx] = true;
+                    qu.add(new Pair(edge.v2, idx));
+                } else {
+                    if (edge.v2 != par)
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static class Pair {
+        int idx;
+        int par;
+
+        public Pair(int idx, int par) {
             this.idx = idx;
-            this.path = path;
+            this.par = par;
         }
     }
 }
