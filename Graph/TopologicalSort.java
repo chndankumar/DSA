@@ -9,7 +9,7 @@ public class TopologicalSort {
         Stack<Integer> st = new Stack<>();
         for (int i = 0; i < graph.size(); i++) {
             if (visited[i] == 0)
-                check(graph, visited, st, i);
+                dfs(graph, visited, st, i);
             ;
         }
         int[] res = new int[st.size()];
@@ -20,7 +20,7 @@ public class TopologicalSort {
         }
     }
 
-    private static void check(ArrayList<ArrayList<Integer>> graph, int[] visited, Stack<Integer> st, int i) {
+    private static void dfs(ArrayList<ArrayList<Integer>> graph, int[] visited, Stack<Integer> st, int i) {
         visited[i] = 1;
         for (int j : graph.get(i)) {
             if (visited[j] == 0)
