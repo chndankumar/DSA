@@ -24,7 +24,7 @@ public class TopologicalSort {
         visited[i] = 1;
         for (int j : graph.get(i)) {
             if (visited[j] == 0)
-                check(graph, visited, st, j);
+                dfs(graph, visited, st, j);
             ;
         }
         st.push(i);
