@@ -5,15 +5,17 @@ import java.util.*;
 public class kahnsAlgo {
     public static void main(String[] args) {
         ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
-        int[] help = new int[graph.size()];
+        int[] inDegreeCount = new int[graph.size()];
+        //Count the no of incoming edge
         for (int i = 0; i < graph.size(); i++) {
             for (int v : graph.get(i)) {
-                help[v] = help[v] + 1;
+                inDegreeCount[v] = inDegreeCount[v] + 1;
             }
         }
+        //push the node that have 0 in degree count that shoule be comre frist in topo-sort
         Queue<Integer> que = new ArrayDeque<>();
         for (int i = 0; i < graph.size(); i++) {
-            if (help[i] == 0) {
+            if (inDegreeCount[i] == 0) {
                 que.add(i);
             }
         }
@@ -23,6 +25,7 @@ public class kahnsAlgo {
             int node = que.remove();
             res[c] = node;
             c++;
+            //reduve the indegree for each node for whome there parent come to the list first
             for (int i : graph.get(node)) {
                 help[i] = help[i] - 1;
                 if (help[i] == 0) {
@@ -30,8 +33,6 @@ public class kahnsAlgo {
                 }
             }
         }
-        if (que.size() != 0) {
-
-        }
+       return res;
     }
 }
